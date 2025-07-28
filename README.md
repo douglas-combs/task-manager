@@ -127,8 +127,6 @@ Navigate to the backend directory and run:
 ./gradlew test
 ```
 
-**Note**: Tests require JDK (not JRE). If you encounter "Could not find tools.jar" error, ensure you have JDK installed and JAVA_HOME points to JDK directory.
-
 This will run:
 - Unit tests for the service layer
 - Integration tests for the REST controller
@@ -205,29 +203,84 @@ docker-compose up -d
 
 ```
 task-manager/
-├── backend/
+├── backend/                              # Spring Boot backend application
 │   ├── src/
 │   │   ├── main/
 │   │   │   ├── java/com/taskmanager/backend/
-│   │   │   │   ├── controller/
-│   │   │   │   ├── dto/
-│   │   │   │   ├── exception/
-│   │   │   │   ├── model/
-│   │   │   │   ├── repository/
-│   │   │   │   └── service/
+│   │   │   │   ├── controller/           # REST controllers
+│   │   │   │   │   └── TaskController.java
+│   │   │   │   ├── dto/                  # Data Transfer Objects
+│   │   │   │   │   ├── CreateTaskRequest.java
+│   │   │   │   │   ├── UpdateTaskRequest.java
+│   │   │   │   │   └── UpdateTaskStatusRequest.java
+│   │   │   │   ├── exception/            # Exception handling
+│   │   │   │   │   ├── GlobalExceptionHandler.java
+│   │   │   │   │   └── TaskNotFoundException.java
+│   │   │   │   ├── model/                # JPA entities
+│   │   │   │   │   ├── Task.java
+│   │   │   │   │   └── TaskStatus.java
+│   │   │   │   ├── repository/           # Data access layer
+│   │   │   │   │   └── TaskRepository.java
+│   │   │   │   ├── service/              # Business logic
+│   │   │   │   │   ├── impl/
+│   │   │   │   │   │   └── TaskServiceImpl.java
+│   │   │   │   │   └── TaskService.java
+│   │   │   │   └── TaskManagerApplication.java
 │   │   │   └── resources/
-│   │   └── test/
-│   ├── build.gradle
-│   └── Dockerfile
-├── frontend/
+│   │   │       └── application.properties
+│   │   └── test/                         # Test classes
+│   │       └── java/com/taskmanager/backend/
+│   │           ├── controller/
+│   │           │   └── TaskControllerIntegrationTest.java
+│   │           └── service/
+│   │               └── TaskServiceTest.java
+│   ├── gradle/                           # Gradle wrapper files
+│   │   └── wrapper/
+│   ├── build.gradle                      # Build configuration
+│   ├── settings.gradle                   # Project settings
+│   ├── gradlew                          # Gradle wrapper (Unix)
+│   ├── gradlew.bat                      # Gradle wrapper (Windows)
+│   └── Dockerfile                       # Docker build instructions
+├── frontend/                            # React TypeScript frontend
+│   ├── public/                          # Static assets
+│   │   └── vite.svg
 │   ├── src/
-│   │   ├── App.tsx
-│   │   ├── main.tsx
-│   │   └── index.css
-│   ├── package.json
-│   ├── vite.config.ts
-│   ├── tsconfig.json
-│   └── Dockerfile
-├── docker-compose.yml
-└── README.md
-```
+│   │   ├── components/                  # React components
+│   │   │   ├── LoadingSpinner.tsx
+│   │   │   ├── NotificationSnackbar.tsx
+│   │   │   ├── StatusColumn.tsx
+│   │   │   ├── TaskCard.tsx
+│   │   │   ├── TaskDialog.tsx
+│   │   │   ├── TaskStats.tsx
+│   │   │   └── index.ts
+│   │   ├── hooks/                       # Custom React hooks
+│   │   │   ├── useSnackbar.ts
+│   │   │   └── useTasks.ts
+│   │   ├── services/                    # API service layer
+│   │   │   └── taskApi.ts
+│   │   ├── types/                       # TypeScript type definitions
+│   │   │   └── index.ts
+│   │   ├── utils/                       # Utility functions
+│   │   │   └── index.ts
+│   │   ├── constants/                   # Application constants
+│   │   │   └── index.ts
+│   │   ├── assets/                      # Static assets
+│   │   │   └── react.svg
+│   │   ├── App.tsx                      # Main App component
+│   │   ├── App.css                      # App-specific styles
+│   │   ├── main.tsx                     # Application entry point
+│   │   ├── index.css                    # Global styles
+│   │   └── vite-env.d.ts               # Vite environment types
+│   ├── index.html                       # HTML template
+│   ├── package.json                     # Node.js dependencies
+│   ├── package-lock.json               # Dependency lock file
+│   ├── vite.config.ts                  # Vite configuration
+│   ├── tsconfig.json                   # TypeScript configuration
+│   ├── tsconfig.app.json               # App-specific TS config
+│   ├── tsconfig.node.json              # Node-specific TS config
+│   ├── eslint.config.js                # ESLint configuration
+│   ├── nginx.conf                      # Nginx configuration for Docker
+│   ├── Dockerfile                      # Docker build instructions
+│   └── REFACTORING_NOTES.md           # Development notes
+├── docker-compose.yml                  # Multi-container Docker setup
+└── README.md                           # Project documentation
