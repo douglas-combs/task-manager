@@ -31,15 +31,13 @@ const App: React.FC = () => {
     groupedTasks,
     stats,
     loading,
-    error,
     createTask,
     updateTask,
     deleteTask,
     updateTaskStatus,
-    clearError,
   } = useTasks()
   
-  const { snackbar, showSuccess, showError, hideSnackbar } = useSnackbar()
+  const { snackbar, showSuccess, hideSnackbar } = useSnackbar()
 
   const handleOpenDialog = useCallback((task?: Task) => {
     setEditingTask(task || null)

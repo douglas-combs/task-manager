@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios'
-import type { Task, CreateTaskRequest, UpdateTaskRequest, UpdateTaskStatusRequest, ApiError } from '../types'
+import type { Task, CreateTaskRequest, UpdateTaskRequest, UpdateTaskStatusRequest } from '../types'
 import { API_BASE_URL } from '../constants'
 import { handleApiError } from '../utils'
 
